@@ -1,0 +1,60 @@
+public class Solution
+{
+    private static int nodesAtDistanceKHelper(BinaryTreeNode<Integer> root, int target, int k)
+    {
+        if (root == null)
+        {
+            return -1;
+        }
+        if (root.data == target)
+        {
+            nodesAtDistanceKDown(root, k);
+            return 0;
+        }
+        int leftD = nodesAtDistanceKHelper(root.left, target, k);
+        if (leftD != -1)
+        {
+            if (leftD + 1 == k)
+            {
+                System.out.println(root.data);
+            }
+            else
+            {
+                nodesAtDistanceKDown(root.right, k - leftD - 2);
+            }
+            return 1 + leftD;
+        }
+        int rightD = nodesAtDistanceKHelper(root.right, target, k);
+        if (rightD != -1)
+        {
+            if (rightD + 1 == k)
+            {
+                System.out.println(root.data);
+            }
+            else
+            {
+                nodesAtDistanceKDown(root.left, k - rightD - 2);
+            }
+            return 1 + rightD;
+        }
+        return -1;
+    }
+    private static void nodesAtDistanceKDown(BinaryTreeNode<Integer> root, int k)
+    {
+        if (root == null)
+        {
+            return;
+        }
+        if (k == 0)
+        {
+            System.out.println(root.data);
+            return;
+        }
+        nodesAtDistanceKDown(root.left, k - 1);
+        nodesAtDistanceKDown(root.right, k - 1);
+    }
+    public static void nodesAtDistanceK(BinaryTreeNode<Integer> root, int node, int k)
+    {
+        nodesAtDistanceKHelper(root, node, k);
+    }
+}
